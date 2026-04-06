@@ -4,6 +4,8 @@ import NetworkGraph from './components/NetworkGraph'
 import CommandInput from './components/CommandInput'
 import SessionStatus from './components/SessionStatus'
 import MemoryLog from './components/MemoryLog'
+import GlyphShowcase from './components/GlyphShowcase'
+import { AnimatedNebuGlyph } from './components/NebuGlyph'
 import { Separator } from './components/ui/separator'
 
 function App() {
@@ -33,9 +35,12 @@ function App() {
           transition={{ duration: 0.8 }}
           className="text-center z-10"
         >
-          <h1 className="font-display text-8xl font-bold tracking-[0.05em] mb-6 text-foreground uppercase">
-            NΞBU
-          </h1>
+          <div className="flex items-center justify-center gap-6 mb-6">
+            <AnimatedNebuGlyph size={64} />
+            <h1 className="font-display text-8xl font-bold tracking-[0.05em] text-foreground uppercase">
+              NΞBU
+            </h1>
+          </div>
           
           <p className="font-display text-xl tracking-[0.15em] text-foreground/60 uppercase mb-4">
             Command the Session
@@ -65,6 +70,10 @@ function App() {
             Scroll to explore
           </p>
         </motion.div>
+      </section>
+
+      <section className="relative min-h-screen flex flex-col items-center justify-center px-8 py-32">
+        <GlyphShowcase />
       </section>
 
       <section className="relative min-h-screen flex flex-col items-center justify-center px-8 py-32">
