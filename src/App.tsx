@@ -38,11 +38,11 @@ function App() {
           </h1>
           
           <p className="font-display text-xl tracking-[0.15em] text-foreground/60 uppercase mb-4">
-            Command the Medium
+            Command the Session
           </p>
           
           <p className="font-body text-base text-foreground/40 max-w-md mx-auto">
-            Unified control interface for multi-platform communication sessions
+            Operator control system for Zoom hosts, with Telegram and Discord extensions
           </p>
         </motion.div>
 
@@ -77,13 +77,13 @@ function App() {
             className="text-center mb-16"
           >
             <p className="font-body text-xs text-muted-foreground uppercase tracking-[0.1em] mb-4">
-              01 — VOID
+              01 — HOST
             </p>
             <h2 className="font-display text-5xl font-semibold tracking-[0.02em] mb-6 text-foreground uppercase">
-              Presence
+              Zoom Control Layer
             </h2>
             <p className="font-body text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
-              Pure focus. No distractions. The operator enters a state of flow where intent becomes action.
+              Precision control for Zoom hosts. Manage waiting rooms, admit participants, monitor session state—all from a unified command interface.
             </p>
           </motion.div>
 
@@ -119,13 +119,13 @@ function App() {
             className="text-center mb-16"
           >
             <p className="font-body text-xs text-muted-foreground uppercase tracking-[0.1em] mb-4">
-              02 — SHIFT
+              02 — EXTEND
             </p>
             <h2 className="font-display text-5xl font-semibold tracking-[0.02em] mb-6 text-foreground uppercase">
-              Remove Friction
+              Remote Execution
             </h2>
             <p className="font-body text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
-              The interface adapts. Commands flow naturally. The operator stays in flow.
+              Execute Zoom host commands from anywhere. Telegram and Discord become remote terminals for session control and real-time alerts.
             </p>
           </motion.div>
 
@@ -138,10 +138,20 @@ function App() {
           >
             <div className="w-full max-w-2xl">
               <p className="text-xs text-muted-foreground uppercase tracking-wider mb-3 font-mono">
-                Adaptive Interface
+                Integration Layer
               </p>
-              <div className="grid grid-cols-3 gap-3">
-                {['Zoom', 'Discord', 'Telegram'].map((platform, idx) => (
+              <div className="grid grid-cols-2 gap-3">
+                <motion.div
+                  className="glass-panel rounded-md p-6 text-center hover:bg-white/[0.04] transition-colors cursor-pointer col-span-2"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <p className="text-base text-primary font-display font-semibold mb-1">Zoom</p>
+                  <p className="text-xs text-muted-foreground font-mono">Primary Control Surface</p>
+                </motion.div>
+                {['Telegram', 'Discord'].map((platform, idx) => (
                   <motion.div
                     key={platform}
                     className="glass-panel rounded-md p-4 text-center hover:bg-white/[0.04] transition-colors cursor-pointer"
@@ -151,7 +161,7 @@ function App() {
                     transition={{ delay: 0.3 + idx * 0.1 }}
                   >
                     <p className="text-sm text-foreground/80 font-body">{platform}</p>
-                    <p className="text-xs text-muted-foreground font-mono mt-1">Connected</p>
+                    <p className="text-xs text-muted-foreground font-mono mt-1">Extension</p>
                   </motion.div>
                 ))}
               </div>
@@ -170,13 +180,13 @@ function App() {
             className="text-center mb-16"
           >
             <p className="font-body text-xs text-muted-foreground uppercase tracking-[0.1em] mb-4">
-              03 — CONTROL
+              03 — COMMAND
             </p>
             <h2 className="font-display text-5xl font-semibold tracking-[0.02em] mb-6 text-foreground uppercase">
-              Command Interface
+              Terminal Interface
             </h2>
             <p className="font-body text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
-              Terminal-style commands across all platforms. Telegram, Discord, Zoom—unified.
+              Command-line driven Zoom host actions. Type /zoom admit all, /zoom lock, /zoom record—execute instantly from any integrated platform.
             </p>
           </motion.div>
 
@@ -191,14 +201,14 @@ function App() {
             
             <div className="glass-panel rounded-lg p-6 w-full max-w-2xl">
               <p className="text-xs text-muted-foreground uppercase tracking-wider mb-4 font-mono">
-                Available Commands
+                Zoom Host Commands
               </p>
               <div className="space-y-2 font-mono text-sm">
                 {[
                   { cmd: '/zoom admit all', desc: 'Admit all from waiting room' },
-                  { cmd: '/discord mute @user', desc: 'Mute specific user' },
-                  { cmd: '/telegram broadcast', desc: 'Send message to all channels' },
-                  { cmd: '/record start', desc: 'Begin recording session' },
+                  { cmd: '/zoom lock', desc: 'Lock session to current participants' },
+                  { cmd: '/zoom mute @user', desc: 'Mute specific participant' },
+                  { cmd: '/zoom record start', desc: 'Begin session recording' },
                 ].map((item, idx) => (
                   <motion.div
                     key={idx}
@@ -228,13 +238,13 @@ function App() {
             className="text-center mb-16"
           >
             <p className="font-body text-xs text-muted-foreground uppercase tracking-[0.1em] mb-4">
-              04 — SYSTEM
+              04 — MONITOR
             </p>
             <h2 className="font-display text-5xl font-semibold tracking-[0.02em] mb-6 text-foreground uppercase">
-              Live Session State
+              Session Telemetry
             </h2>
             <p className="font-body text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
-              Real-time telemetry. Monitor all active sessions from a single control panel.
+              Real-time Zoom session monitoring. Waiting room count, active speakers, hand raises, recording status—all at a glance.
             </p>
           </motion.div>
 
@@ -260,13 +270,13 @@ function App() {
             className="text-center mb-16"
           >
             <p className="font-body text-xs text-muted-foreground uppercase tracking-[0.1em] mb-4">
-              05 — MEMORY
+              05 — ARCHIVE
             </p>
             <h2 className="font-display text-5xl font-semibold tracking-[0.02em] mb-6 text-foreground uppercase">
-              Session Archive
+              Session History
             </h2>
             <p className="font-body text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
-              Summaries, logs, artifacts. Every interaction preserved and searchable.
+              Complete Zoom session logs. Host commands executed, participant flow, recordings captured—every action preserved and searchable.
             </p>
           </motion.div>
 

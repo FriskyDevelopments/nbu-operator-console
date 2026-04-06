@@ -1,58 +1,58 @@
 # Planning Guide
 
-NΞBU is an ultra-minimalist operator control system landing page that serves as a high-fidelity interface for commanding multi-platform communication sessions through a sophisticated node-based architecture.
+NΞBU is a precision Zoom host operator console that gives hosts unified command-line control over live Zoom sessions, with Telegram and Discord extensions for remote command execution and session alerts. The landing page presents a disciplined, operator-grade control system that is product-ready and deployable.
 
 **Experience Qualities**:
-1. **Precision** - Every interaction feels deliberate and controlled, like operating military-grade communication equipment with surgical accuracy
-2. **Mysterious** - The interface reveals its power gradually through subtle interactions, maintaining an air of sophisticated technical depth without overwhelming the operator
-3. **Premium** - Material quality and attention to detail communicate high-end boutique technology, distinguishing it from generic AI/tech aesthetics through restrained design choices
+1. **Disciplined** - Every interaction feels deliberate and controlled, like operating professional-grade communication equipment with surgical precision and authority
+2. **Cinematic** - The interface presents Zoom host operations through a sophisticated visual language that communicates technical depth without abstraction
+3. **Premium** - Material quality and attention to detail communicate operator-grade, deployable technology, distinguishing it from generic AI/SaaS aesthetics through restrained, purposeful design choices
 
 **Complexity Level**: Light Application (multiple features with basic state)
-This is fundamentally a marketing/showcase landing page with interactive demonstrations of the system's capabilities. While it presents complex concepts (network graphs, session management, command interfaces), the actual functionality is demonstrative rather than fully operational, making it a light application with scroll-driven interactions and hover states.
+This is a product landing page that demonstrates NΞBU's Zoom host control capabilities through interactive visualizations of real operational features: participant flow monitoring, waiting room management, session state telemetry, and command-line controls accessible via Telegram and Discord. While the landing page itself is demonstrative, it presents authentic, deployable functionality rather than abstract concepts.
 
 ## Essential Features
 
-### Hero Section with Animated Node
-- **Functionality**: Centered NΞBU wordmark with tagline, minimal subtext, and a glowing central node symbol with vertical signal beam
-- **Purpose**: Establishes immediate visual identity and communicates the core concept of network control
+### Hero Section with Zoom Control Identity
+- **Functionality**: Centered NΞBU wordmark with "Command the Session" tagline and clear positioning as Zoom host operator console
+- **Purpose**: Establishes immediate visual identity and communicates the core purpose: Zoom session control with Telegram/Discord extensions
 - **Trigger**: Page load
-- **Progression**: Page loads → wordmark fades in → central node materializes → vertical beam animates → subtle ambient pulse begins
-- **Success criteria**: Node pulses smoothly at 3-4 second intervals, beam is visible but subtle, typography is crisp and properly spaced
+- **Progression**: Page loads → wordmark fades in → "Command the Session" appears → positioning statement reveals → central node materializes representing active Zoom session
+- **Success criteria**: Typography is crisp and authoritative, positioning is clear and unambiguous, visual hierarchy emphasizes Zoom as primary platform
 
-### Scroll-Triggered Network Expansion
-- **Functionality**: As user scrolls past hero, the central node expands into a network graph showing connected session nodes
-- **Purpose**: Demonstrates the system's ability to manage multiple concurrent sessions visually
+### Scroll-Triggered Session Network Expansion
+- **Functionality**: As user scrolls past hero, the central Zoom session node expands to show connected Telegram and Discord integration nodes
+- **Purpose**: Demonstrates the platform hierarchy: Zoom as operational core, Telegram/Discord as command/alert extensions
 - **Trigger**: User scrolls beyond 30% of hero section
-- **Progression**: Scroll initiated → central node scales → connected nodes branch out radially → connection lines draw → nodes settle into position
-- **Success criteria**: Animation completes within 800ms, nodes are evenly distributed, graph feels organic not mechanical
+- **Progression**: Scroll initiated → central Zoom node scales → Telegram and Discord nodes branch out as satellites → connection lines show integration flow → nodes settle into position
+- **Success criteria**: Animation clearly shows Zoom as the central operational hub with Telegram/Discord as secondary extensions, not peers
 
 ### Session Node Hover Telemetry
-- **Functionality**: Hovering over any network node reveals a glass panel with session data (participant count, status, recording state)
-- **Purpose**: Provides granular control information without cluttering the base interface
+- **Functionality**: Hovering over network nodes reveals Zoom-specific session data (waiting room count, participant states, hand raises, camera/mic status, recording state)
+- **Purpose**: Provides granular Zoom host control information that demonstrates real operational utility
 - **Trigger**: Mouse hover on any session node
-- **Progression**: Hover starts → glass panel fades in with blur effect → data displays (status badge, metrics, timestamp) → panel follows cursor subtly → hover ends → panel fades out
-- **Success criteria**: Panel appears within 150ms, follows cursor with slight lag for smoothness, data is readable with high contrast
+- **Progression**: Hover starts → glass panel fades in → Zoom host data displays (waiting room: 3, hands raised: 2, recording: ON) → panel follows cursor subtly → hover ends → panel fades out
+- **Success criteria**: Panel data feels authentic and operationally relevant to Zoom hosts, not generic placeholder metrics
 
-### Command Input Demonstration
-- **Functionality**: Interactive command bar showing Telegram/Discord command syntax with autocomplete hints
-- **Purpose**: Demonstrates the operator-first, keyboard-driven control paradigm
+### Command Input with Zoom-First Commands
+- **Functionality**: Interactive command bar showing Zoom host commands with Telegram/Discord remote execution capability
+- **Purpose**: Demonstrates the operator-first, keyboard-driven control paradigm for Zoom session management
 - **Trigger**: User focuses on command input or scrolls to CONTROL section
-- **Progression**: Focus/scroll → input bar highlights → placeholder shows example command → typing triggers autocomplete → enter executes mock command → success feedback displays
-- **Success criteria**: Input feels responsive, monospaced font is clear, autocomplete suggestions appear contextually
+- **Progression**: Focus/scroll → input bar highlights → placeholder shows "/zoom admit all" → typing triggers Zoom-specific autocomplete → command preview shows Telegram/Discord execution context
+- **Success criteria**: Command examples are realistic Zoom host actions, Telegram/Discord positioning is clear as remote execution channels
 
-### Session Status Panel
-- **Functionality**: Live-updating panel showing current system state with color-coded status indicators
-- **Purpose**: Provides at-a-glance system health monitoring
+### Zoom Session Status Panel
+- **Functionality**: Live-updating panel showing current Zoom session states with host-relevant metrics (waiting room, active speakers, hand raises, recording status)
+- **Purpose**: Provides at-a-glance Zoom session monitoring that hosts actually need
 - **Trigger**: Visible when SYSTEM section is in viewport
-- **Progression**: Section enters viewport → panel animates in from left → status indicators populate → mock updates cycle every 5 seconds → hover on any row shows detail
-- **Success criteria**: Status colors are immediately distinguishable (green=active, amber=waiting, red=locked), updates feel real-time
+- **Progression**: Section enters viewport → panel animates in → Zoom session metrics populate → waiting room count updates → hand raise indicators pulse → recording status shows duration
+- **Success criteria**: Metrics are Zoom-specific and operationally relevant, interface feels like a deployable host dashboard
 
-### Memory/Logs Viewer
-- **Functionality**: Clean data panel displaying session summaries, logs, and recorded artifacts
-- **Purpose**: Shows the system's archival and memory capabilities
+### Session Memory/Logs Viewer
+- **Functionality**: Archive of Zoom session summaries, host actions logged via commands, and recorded session artifacts
+- **Purpose**: Shows session history and command execution logs relevant to Zoom host operations
 - **Trigger**: Scroll to MEMORY section
-- **Progression**: Section visible → log entries fade in sequentially → timestamps align → hover on entry expands preview → click opens detail modal
-- **Success criteria**: Text is monospaced and aligned, timestamps are precise, data feels authentic not placeholder
+- **Progression**: Section visible → log entries fade in sequentially → Zoom host actions appear ("/zoom admit all - admitted 8 participants") → session recordings listed with metadata
+- **Success criteria**: Log entries reflect real Zoom host workflows, data feels authentic not generic
 
 ## Edge Case Handling
 
@@ -65,7 +65,7 @@ This is fundamentally a marketing/showcase landing page with interactive demonst
 
 ## Design Direction
 
-The design should evoke the feeling of operating sophisticated black-ops communication infrastructure from a secure facility. Think high-end developer tools meets cyber-occult minimalism - obsidian surfaces, precise typography, controlled energy. Every element serves a function; beauty emerges from restraint and precision. The interface should feel like it was designed by engineers who appreciate aesthetics, not designers chasing trends.
+The design should evoke the feeling of operating a professional Zoom host control console from a production environment. Think high-end operator tools for live video production meets disciplined command-line interfaces - obsidian surfaces, precise typography, controlled energy focused on Zoom session management. Every element serves a functional purpose relevant to Zoom hosts; beauty emerges from restraint and operational clarity. The interface should feel like it was designed by broadcast engineers who understand live session control, not designers creating generic communication dashboards.
 
 ## Color Selection
 

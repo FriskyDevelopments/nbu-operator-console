@@ -13,10 +13,11 @@ interface Session {
 
 export default function SessionStatus() {
   const [sessions, setSessions] = useState<Session[]>([
-    { id: 'session-01', platform: 'Zoom', status: 'ACTIVE', participants: 12, uptime: '00:42:15' },
-    { id: 'session-02', platform: 'Discord', status: 'ACTIVE', participants: 8, uptime: '01:15:30' },
-    { id: 'session-03', platform: 'Telegram', status: 'WAITING', participants: 3, uptime: '00:00:00' },
-    { id: 'session-04', platform: 'Zoom', status: 'LOCKED', participants: 0, uptime: '00:00:00' },
+    { id: 'zoom-main', platform: 'Zoom', status: 'ACTIVE', participants: 24, uptime: '00:42:15' },
+    { id: 'zoom-breakout-1', platform: 'Zoom', status: 'ACTIVE', participants: 8, uptime: '00:38:22' },
+    { id: 'zoom-breakout-2', platform: 'Zoom', status: 'WAITING', participants: 3, uptime: '00:00:00' },
+    { id: 'telegram-ext', platform: 'Telegram', status: 'ACTIVE', participants: 12, uptime: '01:15:30' },
+    { id: 'discord-ext', platform: 'Discord', status: 'ACTIVE', participants: 6, uptime: '00:52:18' },
   ])
 
   useEffect(() => {

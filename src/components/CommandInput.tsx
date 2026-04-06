@@ -7,10 +7,10 @@ export default function CommandInput() {
   const [command, setCommand] = useState('')
   const [suggestions] = useState([
     '/zoom admit all',
-    '/discord mute @user',
-    '/telegram broadcast',
-    '/status session-01',
-    '/record start',
+    '/zoom lock',
+    '/zoom mute @user',
+    '/zoom record start',
+    '/zoom spotlight @user',
   ])
 
   const filteredSuggestions = command
