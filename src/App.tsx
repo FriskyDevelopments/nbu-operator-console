@@ -1,26 +1,25 @@
 import { useEffect, useState } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import NetworkGraph from './components/NetworkGraph'
+import { motion, useScroll } from 'framer-motion'
 import CommandInput from './components/CommandInput'
 import SessionStatus from './components/SessionStatus'
 import MemoryLog from './components/MemoryLog'
 import GlyphShowcase from './components/GlyphShowcase'
 import { AnimatedNebuGlyph } from './components/NebuGlyph'
-import { Separator } from './components/ui/separator'
+import NebuGlyph from './components/NebuGlyph'
 
 function App() {
-  const [networkExpanded, setNetworkExpanded] = useState(false)
+  const [glyphExpanded, setGlyphExpanded] = useState(false)
   const { scrollYProgress } = useScroll()
   
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (latest) => {
-      if (latest > 0.15 && !networkExpanded) {
-        setNetworkExpanded(true)
+      if (latest > 0.05 && !glyphExpanded) {
+        setGlyphExpanded(true)
       }
     })
     
     return () => unsubscribe()
-  }, [scrollYProgress, networkExpanded])
+  }, [scrollYProgress, glyphExpanded])
 
   return (
     <div className="min-h-screen bg-background font-body">
@@ -52,12 +51,134 @@ function App() {
         </motion.div>
 
         <motion.div
-          className="mt-16"
+          className="mt-16 relative"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          <NetworkGraph expanded={networkExpanded} />
+          <motion.div
+            className="relative flex items-center justify-center"
+            animate={{
+              scale: glyphExpanded ? 1.8 : 1,
+            }}
+            transition={{ duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
+          >
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center"
+              animate={{
+                opacity: glyphExpanded ? [0.3, 0.6, 0.3] : 0.4,
+                scale: glyphExpanded ? [1, 1.15, 1] : 1,
+              }}
+              transition={{
+                opacity: { duration: 3, repeat: Infinity, ease: 'easeInOut' },
+                scale: { duration: 3, repeat: Infinity, ease: 'easeInOut' },
+              }}
+            >
+              <div className="w-48 h-48 bg-primary/10 rounded-full blur-3xl" />
+            </motion.div>
+
+            <motion.div
+              animate={{
+                rotate: glyphExpanded ? 360 : 0,
+              }}
+              transition={{ 
+                duration: 20, 
+                repeat: Infinity, 
+                ease: 'linear',
+                delay: glyphExpanded ? 0 : 0 
+              }}
+            >
+              <NebuGlyph variant="signal" size={120} />
+            </motion.div>
+          </motion.div>
+
+          {glyphExpanded && (
+            <motion.div
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 1 }}
+            >
+              {[0, 60, 120, 180, 240, 300].map((angle, index) => {
+                const radians = (angle * Math.PI) / 180
+                const distance = 180
+                const x = Math.cos(radians) * distance
+                const y = Math.sin(radians) * distance
+                
+                return (
+                  <motion.div
+                    key={angle}
+                    className="absolute"
+                    style={{
+                      left: '50%',
+                      top: '50%',
+                    }}
+                    initial={{ 
+                      x: 0, 
+                      y: 0,
+                      opacity: 0,
+                      scale: 0,
+                    }}
+                    animate={{ 
+                      x, 
+                      y,
+                      opacity: 1,
+                      scale: 1,
+                    }}
+                    transition={{ 
+                      delay: 0.5 + index * 0.08,
+                      duration: 0.8,
+                      ease: [0.34, 1.56, 0.64, 1]
+                    }}
+                  >
+                    <motion.div
+                      animate={{
+                        opacity: [0.4, 0.8, 0.4],
+                      }}
+                      transition={{
+                        duration: 2 + index * 0.3,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                      }}
+                    >
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-primary/20 rounded-full blur-md" />
+                        <div className="relative w-2 h-2 bg-primary rounded-full shadow-[0_0_12px_rgba(0,255,65,0.5)]" />
+                      </div>
+                    </motion.div>
+                  </motion.div>
+                )
+              })}
+
+              <svg className="absolute inset-0 w-full h-full">
+                {[0, 60, 120, 180, 240, 300].map((angle, index) => {
+                  const radians = (angle * Math.PI) / 180
+                  const distance = 180
+                  const x = Math.cos(radians) * distance
+                  const y = Math.sin(radians) * distance
+                  
+                  return (
+                    <motion.line
+                      key={`line-${angle}`}
+                      x1="50%"
+                      y1="50%"
+                      x2={`calc(50% + ${x}px)`}
+                      y2={`calc(50% + ${y}px)`}
+                      stroke="oklch(0.90 0.27 142 / 0.2)"
+                      strokeWidth="1"
+                      initial={{ pathLength: 0, opacity: 0 }}
+                      animate={{ pathLength: 1, opacity: 1 }}
+                      transition={{ 
+                        delay: 0.5 + index * 0.08,
+                        duration: 0.8,
+                        ease: 'easeOut'
+                      }}
+                    />
+                  )
+                })}
+              </svg>
+            </motion.div>
+          )}
         </motion.div>
 
         <motion.div
