@@ -9,10 +9,14 @@ import NebuGlyph from './components/NebuGlyph'
 import { OrbitalNode } from './components/OrbitalNode'
 import SessionManagementPanel from './components/SessionManagementPanel'
 import AnalyticsDashboard from './components/AnalyticsDashboard'
+import SessionComparisonView from './components/SessionComparisonView'
+import { Button } from './components/ui/button'
+import { ChartBar } from '@phosphor-icons/react'
 
 function App() {
   const [glyphExpanded, setGlyphExpanded] = useState(false)
   const [selectedSession, setSelectedSession] = useState<number | null>(null)
+  const [showComparison, setShowComparison] = useState(false)
   const { scrollYProgress } = useScroll()
   
   const orbitalNodes = [
@@ -454,6 +458,22 @@ function App() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
+            className="mb-8 flex justify-center"
+          >
+            <Button
+              onClick={() => setShowComparison(true)}
+              className="glass-panel hover:glass-panel-hover border border-white/[0.08] px-6 py-3"
+            >
+              <ChartBar size={18} className="mr-2" weight="bold" />
+              <span className="font-mono text-sm uppercase tracking-wider">Compare Sessions</span>
+            </Button>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
             <AnalyticsDashboard sessionId="ZM-4A7B" />
           </motion.div>
@@ -509,6 +529,9 @@ function App() {
             telemetry={orbitalNodes[selectedSession].telemetry}
             onClose={() => setSelectedSession(null)}
           />
+        )}
+        {showComparison && (
+          <SessionComparisonView onClose={() => setShowComparison(false)} />
         )}
       </AnimatePresence>
     </div>

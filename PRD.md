@@ -61,6 +61,13 @@ This is a product landing page that demonstrates NΞBU's Zoom host control capab
 - **Progression**: Section enters viewport → header animates in → metric cards populate with animated counters and micro-trend graphs → live activity graph draws participant flow line → audio states bar fills → timeline events appear → participant flow funnel animates
 - **Success criteria**: All metrics feel operationally relevant to Zoom hosts, data updates smoothly without jarring changes, visual hierarchy guides eye to most important metrics first, animations enhance comprehension without distraction
 
+### Session Comparison View
+- **Functionality**: Full-screen overlay allowing operators to compare analytics from 2-4 Zoom sessions simultaneously with flexible layout options
+- **Purpose**: Enables hosts to analyze multiple sessions at once, identify patterns across meetings, and make data-driven improvements to session management
+- **Trigger**: Click "Compare Sessions" button in ANALYZE section
+- **Progression**: Button clicked → full-screen comparison view fades in with backdrop blur → session selector panel appears with dropdown menus → operators select 2-4 sessions to compare → can toggle between side-by-side and stacked layouts → can add/remove sessions dynamically → each session shows full analytics dashboard → close button returns to main view
+- **Success criteria**: Layout adapts intelligently to number of selected sessions (2 = 2 columns, 3 = 3 columns, 4 = 2x2 grid), session selection is intuitive with status indicators, comparison mode toggle is discoverable, all analytics remain readable at reduced sizes
+
 ## Edge Case Handling
 
 - **Mobile/Touch Devices** - Network graph simplifies to vertical timeline, hover states become tap-to-reveal, command input shows virtual keyboard with command shortcuts
