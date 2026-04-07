@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from './components/ui/button'
 import { 
   UserPlus, 
@@ -7,14 +7,21 @@ import {
   Record, 
   Terminal,
   Users,
-  Clock
+  Clock,
+  ChartLine,
+  ArrowsLeftRight
 } from '@phosphor-icons/react'
 import { Card } from './components/ui/card'
 import { Input } from './components/ui/input'
 import { Separator } from './components/ui/separator'
 import { Badge } from './components/ui/badge'
+import AnalyticsDashboard from './components/AnalyticsDashboard'
+import SessionComparisonView from './components/SessionComparisonView'
+
+type View = 'control' | 'analytics' | 'comparison'
 
 function App() {
+  const [currentView, setCurrentView] = useState<View>('control')
   const [isLocked, setIsLocked] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
   const [commandInput, setCommandInput] = useState('')
@@ -82,6 +89,54 @@ function App() {
 
   const sessionState = isLocked ? 'LOCKED' : 'ACTIVE'
   const sessionStateVariant = isLocked ? 'destructive' : 'default'
+
+  if (currentView === 'comparison') {
+    return (
+      <AnimatePresence>
+        <SessionComparisonView onClose={() => setCurrentView('analytics')} />
+      </AnimatePresence>
+    )
+  }
+
+  if (currentView === 'analytics') {
+    return (
+      <div className="min-h-screen bg-background font-body">
+        <div className="fixed top-0 left-0 right-0 z-40 glass-panel border-b border-white/[0.08]">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
+            <h1 className="font-display text-2xl font-bold tracking-tight text-foreground uppercase">
+              NΞBU
+            </h1>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setCurrentView('control')}
+                className="glass-panel hover:glass-panel-hover"
+              >
+                <Terminal size={16} className="mr-2" />
+                <span className="font-mono text-xs uppercase">Control</span>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setCurrentView('comparison')}
+                className="glass-panel hover:glass-panel-hover"
+              >
+                <ArrowsLeftRight size={16} className="mr-2" />
+                <span className="font-mono text-xs uppercase">Compare</span>
+              </Button>
+            </div>
+          </div>
+        </div>
+        
+        <div className="pt-20 px-4 md:px-8 py-12">
+          <div className="max-w-7xl mx-auto">
+            <AnalyticsDashboard sessionId="ZM-4A7B" />
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-background font-body">
@@ -245,6 +300,29 @@ function App() {
               </Button>
             </form>
           </Card>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="w-full max-w-5xl z-10 flex justify-center gap-4"
+        >
+          <Button
+            onClick={() => setCurrentView('analytics')}
+            className="bg-primary/30 hover:bg-primary/40 border-primary/30 text-primary font-mono text-sm uppercase tracking-wider h-12 px-8"
+          >
+            <ChartLine size={20} weight="bold" className="mr-2" />
+            View Analytics
+          </Button>
+          <Button
+            onClick={() => setCurrentView('comparison')}
+            variant="secondary"
+            className="font-mono text-sm uppercase tracking-wider h-12 px-8"
+          >
+            <ArrowsLeftRight size={20} weight="bold" className="mr-2" />
+            Compare Sessions
+          </Button>
         </motion.div>
       </section>
     </div>

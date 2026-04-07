@@ -62,11 +62,11 @@ This is a product landing page that demonstrates NΞBU's Zoom host control capab
 - **Success criteria**: All metrics feel operationally relevant to Zoom hosts, data updates smoothly without jarring changes, visual hierarchy guides eye to most important metrics first, animations enhance comprehension without distraction
 
 ### Session Comparison View
-- **Functionality**: Full-screen overlay allowing operators to compare analytics from 2-4 Zoom sessions simultaneously with flexible layout options
-- **Purpose**: Enables hosts to analyze multiple sessions at once, identify patterns across meetings, and make data-driven improvements to session management
+- **Functionality**: Full-screen overlay allowing operators to compare analytics from 2-4 Zoom sessions simultaneously with flexible layout options and comparative insights panel
+- **Purpose**: Enables hosts to analyze multiple sessions at once, identify performance patterns across meetings, spot trends, and make data-driven improvements to session management through direct comparison
 - **Trigger**: Click "Compare Sessions" button in ANALYZE section
-- **Progression**: Button clicked → full-screen comparison view fades in with backdrop blur → session selector panel appears with dropdown menus → operators select 2-4 sessions to compare → can toggle between side-by-side and stacked layouts → can add/remove sessions dynamically → each session shows full analytics dashboard → close button returns to main view
-- **Success criteria**: Layout adapts intelligently to number of selected sessions (2 = 2 columns, 3 = 3 columns, 4 = 2x2 grid), session selection is intuitive with status indicators, comparison mode toggle is discoverable, all analytics remain readable at reduced sizes
+- **Progression**: Button clicked → full-screen comparison view fades in with backdrop blur → comparative insights panel reveals showing high/avg/low metrics and variance across selected sessions → session selector cards appear with rich session metadata (date, duration, participant count, status) → operators select 2-4 sessions using dropdowns → can toggle between grid and stacked layouts using tab controls → can add sessions dynamically up to 4 total → can remove sessions down to minimum of 2 → each session displays full analytics dashboard in contained panel → close button returns to main view
+- **Success criteria**: Layout adapts intelligently to number of selected sessions (2 = 2-column grid on XL screens, 3 = 3-column grid, 4 = 2x2 responsive grid), comparative insights automatically calculate variance percentages across key metrics (participants, peak concurrent, hand raises), session selection dropdowns show rich metadata and filter out already-selected sessions, grid/stacked toggle provides clear visual distinction, all analytics dashboards remain readable at reduced sizes, minimum 2 sessions enforced for meaningful comparison
 
 ## Edge Case Handling
 
