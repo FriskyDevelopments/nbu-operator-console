@@ -162,15 +162,18 @@ function App() {
                   onClick={handleLockToggle}
                   variant={isLocked ? "destructive" : "secondary"}
                   className="w-full font-mono text-sm uppercase tracking-wider h-12"
-                </Button>
+                >
                   <LockKey size={20} weight="bold" className="mr-2" />
                   {isLocked ? 'Unlock' : 'Lock'} Session
-                  variant={isRecording ? "destructive" : "secondary"}
-                  className="w-full font-mono text-sm uppercase tracking-wider h-12"
+                </Button>
+                <Button 
                   onClick={handleRecordToggle}
                   variant={isRecording ? "destructive" : "secondary"}
                   className="w-full font-mono text-sm uppercase tracking-wider h-12"
                 >
+                  <Record size={20} weight="bold" className="mr-2" />
+                  {isRecording ? 'Stop' : 'Start'} Recording
+                </Button>
               </div>
             </Card>
           </motion.div>
@@ -191,13 +194,10 @@ function App() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3 }}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3 }}
+                    className="glass-panel-hover rounded-md p-3"
+                  >
+                    <div className="flex items-center justify-between mb-1">
                       <code className="text-sm text-primary font-mono truncate">
-                        {entry.command}
-                      </code>
-                      <span className="text-xs text-muted-foreground font-mono whitespace-nowrap">
                         {entry.command}
                       </code>
                       <span className="text-xs text-muted-foreground font-mono whitespace-nowrap">
@@ -209,41 +209,45 @@ function App() {
                     </p>
                   </motion.div>
                 ))}
-        </div>
-
+                    </div>
+            </Card>
           </motion.div>
-          initial={{ opacity: 0, y: 20 }}
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="w-full max-w-5xl z-10"
         >
           <Card className="glass-panel p-6">
             <div className="flex items-center gap-3 mb-4">
               <Terminal size={20} weight="bold" className="text-primary" />
-          <Card className="glass-panel p-6">ound">
-            <div className="flex items-center gap-3 mb-4">
-              <Terminal size={20} weight="bold" className="text-primary" />
               <h2 className="text-sm font-mono uppercase tracking-wider text-foreground">
                 Command Interface
-              </h2>assName="flex flex-col sm:flex-row gap-3">
+              </h2>
             </div>
             <Separator className="mb-4" />
             <form onSubmit={handleCommand} className="flex flex-col sm:flex-row gap-3">
               <Input
-                value={commandInput}white/[0.08] text-foreground font-mono h-14 text-base pl-4 focus:border-primary/50 focus:ring-primary/20"
+                id="command-input"
+                value={commandInput}
+                onChange={(e) => setCommandInput(e.target.value)}
+                placeholder="/zoom [command]"
+                className="flex-1 bg-background border-white/[0.08] text-foreground font-mono h-14 text-base pl-4 focus:border-primary/50 focus:ring-primary/20"
               />
               <Button 
-                className="flex-1 bg-background border-white/[0.08] text-foreground font-mono h-14 text-base pl-4 focus:border-primary/50 focus:ring-primary/20"
-                className="bg-primary/30 hover:bg-primary/40 border-primary/30 text-primary font-mono text-sm uppercase tracking-wider px-8 h-14"
-              >
                 type="submit"
-              </Button>
+                className="bg-primary/30 hover:bg-primary/40 border-primary/30 text-primary font-mono text-sm uppercase tracking-wider px-8 h-14"
               >
                 Execute
               </Button>
+            </form>
+          </Card>
+        </motion.div>
       </section>
     </div>
   )
 }
 
-export default Appexport default App
+export default App
