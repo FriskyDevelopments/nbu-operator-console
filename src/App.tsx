@@ -6,10 +6,86 @@ import MemoryLog from './components/MemoryLog'
 import GlyphShowcase from './components/GlyphShowcase'
 import { AnimatedNebuGlyph } from './components/NebuGlyph'
 import NebuGlyph from './components/NebuGlyph'
+import { OrbitalNode } from './components/OrbitalNode'
 
 function App() {
   const [glyphExpanded, setGlyphExpanded] = useState(false)
   const { scrollYProgress } = useScroll()
+  
+  const orbitalNodes = [
+    {
+      angle: 0,
+      telemetry: {
+        sessionId: 'ZM-4A7B',
+        status: 'ACTIVE' as const,
+        participants: 24,
+        waitingRoom: 3,
+        recording: true,
+        handRaised: 2,
+        muted: 18,
+      },
+    },
+    {
+      angle: 60,
+      telemetry: {
+        sessionId: 'ZM-8C2F',
+        status: 'ACTIVE' as const,
+        participants: 12,
+        waitingRoom: 0,
+        recording: false,
+        handRaised: 0,
+        muted: 9,
+      },
+    },
+    {
+      angle: 120,
+      telemetry: {
+        sessionId: 'ZM-1D9E',
+        status: 'WAITING' as const,
+        participants: 8,
+        waitingRoom: 5,
+        recording: false,
+        handRaised: 1,
+        muted: 6,
+      },
+    },
+    {
+      angle: 180,
+      telemetry: {
+        sessionId: 'ZM-6F3A',
+        status: 'ACTIVE' as const,
+        participants: 35,
+        waitingRoom: 1,
+        recording: true,
+        handRaised: 0,
+        muted: 28,
+      },
+    },
+    {
+      angle: 240,
+      telemetry: {
+        sessionId: 'ZM-2B5C',
+        status: 'LOCKED' as const,
+        participants: 16,
+        waitingRoom: 0,
+        recording: false,
+        handRaised: 0,
+        muted: 16,
+      },
+    },
+    {
+      angle: 300,
+      telemetry: {
+        sessionId: 'ZM-9E1D',
+        status: 'ACTIVE' as const,
+        participants: 42,
+        waitingRoom: 8,
+        recording: true,
+        handRaised: 5,
+        muted: 30,
+      },
+    },
+  ]
   
   useEffect(() => {
     const unsubscribe = scrollYProgress.on('change', (latest) => {
@@ -99,67 +175,26 @@ function App() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 1 }}
             >
-              {[0, 60, 120, 180, 240, 300].map((angle, index) => {
-                const radians = (angle * Math.PI) / 180
-                const distance = 180
-                const x = Math.cos(radians) * distance
-                const y = Math.sin(radians) * distance
-                
-                return (
-                  <motion.div
-                    key={angle}
-                    className="absolute"
-                    style={{
-                      left: '50%',
-                      top: '50%',
-                    }}
-                    initial={{ 
-                      x: 0, 
-                      y: 0,
-                      opacity: 0,
-                      scale: 0,
-                    }}
-                    animate={{ 
-                      x, 
-                      y,
-                      opacity: 1,
-                      scale: 1,
-                    }}
-                    transition={{ 
-                      delay: 0.5 + index * 0.08,
-                      duration: 0.8,
-                      ease: [0.34, 1.56, 0.64, 1]
-                    }}
-                  >
-                    <motion.div
-                      animate={{
-                        opacity: [0.4, 0.8, 0.4],
-                      }}
-                      transition={{
-                        duration: 2 + index * 0.3,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                      }}
-                    >
-                      <div className="relative">
-                        <div className="absolute inset-0 bg-primary/20 rounded-full blur-md" />
-                        <div className="relative w-2 h-2 bg-primary rounded-full shadow-[0_0_12px_rgba(0,255,65,0.5)]" />
-                      </div>
-                    </motion.div>
-                  </motion.div>
-                )
-              })}
+              {orbitalNodes.map((node, index) => (
+                <OrbitalNode
+                  key={node.angle}
+                  angle={node.angle}
+                  index={index}
+                  distance={180}
+                  telemetry={node.telemetry}
+                />
+              ))}
 
-              <svg className="absolute inset-0 w-full h-full">
-                {[0, 60, 120, 180, 240, 300].map((angle, index) => {
-                  const radians = (angle * Math.PI) / 180
+              <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                {orbitalNodes.map((node, index) => {
+                  const radians = (node.angle * Math.PI) / 180
                   const distance = 180
                   const x = Math.cos(radians) * distance
                   const y = Math.sin(radians) * distance
                   
                   return (
                     <motion.line
-                      key={`line-${angle}`}
+                      key={`line-${node.angle}`}
                       x1="50%"
                       y1="50%"
                       x2={`calc(50% + ${x}px)`}
