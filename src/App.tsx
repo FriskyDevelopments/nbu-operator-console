@@ -196,7 +196,7 @@ function App() {
                     transition={{ duration: 0.3 }}
                     className="glass-panel-hover rounded-md p-3"
                   >
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center justify-between mb-2">
                       <code className="text-sm text-primary font-mono truncate">
                         {entry.command}
                       </code>
@@ -209,7 +209,7 @@ function App() {
                     </p>
                   </motion.div>
                 ))}
-                    </div>
+              </div>
             </Card>
           </motion.div>
         </div>
@@ -227,18 +227,19 @@ function App() {
                 Command Interface
               </h2>
             </div>
+            
             <Separator className="mb-4" />
+            
             <form onSubmit={handleCommand} className="flex flex-col sm:flex-row gap-3">
               <Input
-                id="command-input"
                 value={commandInput}
                 onChange={(e) => setCommandInput(e.target.value)}
-                placeholder="/zoom [command]"
+                placeholder="/zoom admit all"
                 className="flex-1 bg-background border-white/[0.08] text-foreground font-mono h-14 text-base pl-4 focus:border-primary/50 focus:ring-primary/20"
               />
               <Button 
                 type="submit"
-                className="bg-primary/30 hover:bg-primary/40 border-primary/30 text-primary font-mono text-sm uppercase tracking-wider px-8 h-14"
+                className="bg-primary/30 hover:bg-primary/40 border-primary/30 text-primary font-mono text-sm uppercase tracking-wider h-14 px-8"
               >
                 Execute
               </Button>
