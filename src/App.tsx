@@ -115,10 +115,21 @@ function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
+            <Card className="glass-panel p-6 h-full">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-sm font-mono uppercase tracking-wider text-foreground">
+                  Control Panel
+                </h2>
+                <Badge variant={sessionStateVariant} className="font-mono text-xs">
+                  {sessionState}
+                </Badge>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="glass-panel-hover rounded-md p-4">
                   <div className="flex items-center gap-2 mb-2">
                     <Clock size={16} className="text-muted-foreground" />
-                  Control Panelreground">Waiting Room</span>
+                    <span className="text-xs font-mono uppercase text-muted-foreground">Waiting Room</span>
                   </div>
                   <p className="text-3xl font-display font-bold text-foreground">
                     {waitingRoomCount}
@@ -138,17 +149,6 @@ function App() {
 
               <Separator className="mb-6" />
               
-              <div className="space-y-3">
-                <Button 
-                  onClick={handleAdmitAll}
-                  disabled={waitingRoomCount === 0}
-                  className="w-full bg-primary/30 hover:bg-primary/40 border-primary/30 text-primary font-mono text-sm uppercase tracking-wider h-12 disabled:opacity-30"
-                >
-                  <UserPlus size={20} weight="bold" className="mr-2" />
-                  Admit All
-                </Button>
-                <Button 
-                  onClick={handleLockToggle}
               <div className="space-y-3">
                 <Button 
                   onClick={handleAdmitAll}
@@ -191,16 +191,27 @@ function App() {
                 {activityLog.map((entry, index) => (
                   <motion.div
                     key={index}
-                      </span>
-                    </div>
-                    <p className="text-sm text-foreground/80 font-body">
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3 }}
                     className="glass-panel-hover rounded-md p-4 space-y-2"
                   >
                     <div className="flex items-center justify-between gap-4">
                       <code className="text-sm text-primary font-mono truncate">
+                        {entry.command}
+                      </code>
+                      <span className="text-xs text-muted-foreground font-mono whitespace-nowrap">
+                        {entry.timestamp}
+                      </span>
+                    </div>
+                    <p className="text-sm text-foreground/80 font-body">
+                      {entry.result}
+                    </p>
+                  </motion.div>
+                ))}
               </div>
             </Card>
-                      <span className="text-xs text-muted-foreground font-mono whitespace-nowrap">
+          </motion.div>
         </div>
 
         <motion.div
@@ -218,18 +229,18 @@ function App() {
             </div>
             <Separator className="mb-4" />
             <form onSubmit={handleCommand} className="flex flex-col sm:flex-row gap-3">
-          className="w-full max-w-5xl z-10"
+              <Input
                 value={commandInput}
                 onChange={(e) => setCommandInput(e.target.value)}
                 placeholder="/zoom command"
                 className="flex-1 bg-background border-white/[0.08] text-foreground font-mono h-14 text-base pl-4 focus:border-primary/50 focus:ring-primary/20"
               />
               <Button 
-              </h2>
+                type="submit"
                 className="bg-primary/30 hover:bg-primary/40 border-primary/30 text-primary font-mono text-sm uppercase tracking-wider px-8 h-14"
-            <Separator className="mb-4" />
-            <form onSubmit={handleCommand} className="flex flex-col sm:flex-row gap-3">
-              <Input
+              >
+                Execute
+              </Button>
             </form>
           </Card>
         </motion.div>
@@ -238,5 +249,4 @@ function App() {
   )
 }
 
-              >
-                Execute          </Card>
+export default App
