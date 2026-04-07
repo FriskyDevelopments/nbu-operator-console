@@ -1,122 +1,91 @@
-import { useEffect, useState } from 'react'
-import { motion, useScroll, AnimatePresence } from 'framer-motion'
-import CommandInput from './components/CommandInput'
-import SessionStatus from './components/SessionStatus'
-import MemoryLog from './components/MemoryLog'
-import GlyphShowcase from './components/GlyphShowcase'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { AnimatedNebuGlyph } from './components/NebuGlyph'
-import NebuGlyph from './components/NebuGlyph'
-import { OrbitalNode } from './components/OrbitalNode'
-import SessionManagementPanel from './components/SessionManagementPanel'
-import AnalyticsDashboard from './components/AnalyticsDashboard'
-import SessionComparisonView from './components/SessionComparisonView'
 import { Button } from './components/ui/button'
-import { ChartBar } from '@phosphor-icons/react'
+import { 
+  UserPlus, 
+  LockKey, 
+  Record, 
+  Users, 
+  Clock, 
+  CheckCircle,
+  Terminal
+} from '@phosphor-icons/react'
+import { Badge } from './components/ui/badge'
+import { Card } from './components/ui/card'
+import { Input } from './components/ui/input'
+import { Separator } from './components/ui/separator'
 
 function App() {
-  const [glyphExpanded, setGlyphExpanded] = useState(false)
-  const [selectedSession, setSelectedSession] = useState<number | null>(null)
-  const [showComparison, setShowComparison] = useState(false)
-  const { scrollYProgress } = useScroll()
-  
-  const orbitalNodes = [
-    {
-      angle: 0,
-      telemetry: {
-        sessionId: 'ZM-4A7B',
-        status: 'ACTIVE' as const,
-        participants: 24,
-        waitingRoom: 3,
-        recording: true,
-        handRaised: 2,
-        muted: 18,
-      },
-    },
-    {
-      angle: 60,
-      telemetry: {
-        sessionId: 'ZM-8C2F',
-        status: 'ACTIVE' as const,
-        participants: 12,
-        waitingRoom: 0,
-        recording: false,
-        handRaised: 0,
-        muted: 9,
-      },
-    },
-    {
-      angle: 120,
-      telemetry: {
-        sessionId: 'ZM-1D9E',
-        status: 'WAITING' as const,
-        participants: 8,
-        waitingRoom: 5,
-        recording: false,
-        handRaised: 1,
-        muted: 6,
-      },
-    },
-    {
-      angle: 180,
-      telemetry: {
-        sessionId: 'ZM-6F3A',
-        status: 'ACTIVE' as const,
-        participants: 35,
-        waitingRoom: 1,
-        recording: true,
-        handRaised: 0,
-        muted: 28,
-      },
-    },
-    {
-      angle: 240,
-      telemetry: {
-        sessionId: 'ZM-2B5C',
-        status: 'LOCKED' as const,
-        participants: 16,
-        waitingRoom: 0,
-        recording: false,
-        handRaised: 0,
-        muted: 16,
-      },
-    },
-    {
-      angle: 300,
-      telemetry: {
-        sessionId: 'ZM-9E1D',
-        status: 'ACTIVE' as const,
-        participants: 42,
-        waitingRoom: 8,
-        recording: true,
-        handRaised: 5,
-        muted: 30,
-      },
-    },
-  ]
-  
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.on('change', (latest) => {
-      if (latest > 0.05 && !glyphExpanded) {
-        setGlyphExpanded(true)
-      }
-    })
+  const [isLocked, setIsLocked] = useState(false)
+  const [isRecording, setIsRecording] = useState(false)
+  const [commandInput, setCommandInput] = useState('')
+  const [activityLog, setActivityLog] = useState([
+    { command: '/zoom admit all', result: '✓ 12 participants admitted', timestamp: '14:32:15' },
+    { command: '/zoom lock', result: '✓ session locked', timestamp: '14:35:22' },
+  ])
+
+  const handleCommand = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!commandInput.trim()) return
     
-    return () => unsubscribe()
-  }, [scrollYProgress, glyphExpanded])
+    setActivityLog([
+      { 
+        command: commandInput, 
+        result: '✓ command executed', 
+        timestamp: new Date().toLocaleTimeString('en-US', { hour12: false }) 
+      },
+      ...activityLog,
+    ])
+    setCommandInput('')
+  }
+
+  const handleAdmitAll = () => {
+    setActivityLog([
+      { 
+        command: '/zoom admit all', 
+        result: '✓ 12 participants admitted', 
+        timestamp: new Date().toLocaleTimeString('en-US', { hour12: false }) 
+      },
+      ...activityLog,
+    ])
+  }
+
+  const handleLockToggle = () => {
+    const newState = !isLocked
+    setIsLocked(newState)
+    setActivityLog([
+      { 
+        command: newState ? '/zoom lock' : '/zoom unlock', 
+        result: newState ? '✓ session locked' : '✓ session unlocked', 
+        timestamp: new Date().toLocaleTimeString('en-US', { hour12: false }) 
+      },
+      ...activityLog,
+    ])
+  }
+
+  const handleRecordToggle = () => {
+    const newState = !isRecording
+    setIsRecording(newState)
+    setActivityLog([
+      { 
+        command: newState ? '/zoom record start' : '/zoom record stop', 
+        result: newState ? '✓ recording started' : '✓ recording stopped', 
+        timestamp: new Date().toLocaleTimeString('en-US', { hour12: false }) 
+      },
+      ...activityLog,
+    ])
+  }
 
   return (
-    <div className="min-h-screen bg-background font-body">
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-8">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-primary/20 to-transparent" />
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center z-10"
-        >
+    <div className="min-h-screen bg-background font-body px-8 py-16">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="max-w-6xl mx-auto"
+      >
+        <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-6 mb-6">
             <AnimatedNebuGlyph size={64} />
             <h1 className="font-display text-8xl font-bold tracking-[0.05em] text-foreground uppercase">
@@ -128,412 +97,189 @@ function App() {
             Command the Session
           </p>
           
-          <p className="font-body text-base text-foreground/40 max-w-md mx-auto">
+          <p className="font-body text-base text-foreground/40 max-w-2xl mx-auto">
             Operator control system for Zoom hosts, with Telegram and Discord extensions
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          className="mt-16 relative"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-        >
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <motion.div
-            className="relative flex items-center justify-center"
-            animate={{
-              scale: glyphExpanded ? 1.8 : 1,
-            }}
-            transition={{ duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
-          >
-            <motion.div
-              className="absolute inset-0 flex items-center justify-center"
-              animate={{
-                opacity: glyphExpanded ? [0.3, 0.6, 0.3] : 0.4,
-                scale: glyphExpanded ? [1, 1.15, 1] : 1,
-              }}
-              transition={{
-                opacity: { duration: 3, repeat: Infinity, ease: 'easeInOut' },
-                scale: { duration: 3, repeat: Infinity, ease: 'easeInOut' },
-              }}
-            >
-              <div className="w-48 h-48 bg-primary/10 rounded-full blur-3xl" />
-            </motion.div>
-
-            <motion.div
-              animate={{
-                rotate: glyphExpanded ? 360 : 0,
-              }}
-              transition={{ 
-                duration: 20, 
-                repeat: Infinity, 
-                ease: 'linear',
-                delay: glyphExpanded ? 0 : 0 
-              }}
-            >
-              <NebuGlyph variant="signal" size={120} />
-            </motion.div>
-          </motion.div>
-
-          {glyphExpanded && (
-            <motion.div
-              className="absolute inset-0 flex items-center justify-center pointer-events-none"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 1 }}
-            >
-              {orbitalNodes.map((node, index) => (
-                <OrbitalNode
-                  key={node.angle}
-                  angle={node.angle}
-                  index={index}
-                  distance={180}
-                  telemetry={node.telemetry}
-                  onClick={() => setSelectedSession(index)}
-                />
-              ))}
-
-              <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                {orbitalNodes.map((node, index) => {
-                  const radians = (node.angle * Math.PI) / 180
-                  const distance = 180
-                  const x = Math.cos(radians) * distance
-                  const y = Math.sin(radians) * distance
-                  
-                  return (
-                    <motion.line
-                      key={`line-${node.angle}`}
-                      x1="50%"
-                      y1="50%"
-                      x2={`calc(50% + ${x}px)`}
-                      y2={`calc(50% + ${y}px)`}
-                      stroke="oklch(0.90 0.27 142 / 0.2)"
-                      strokeWidth="1"
-                      initial={{ pathLength: 0, opacity: 0 }}
-                      animate={{ pathLength: 1, opacity: 1 }}
-                      transition={{ 
-                        delay: 0.5 + index * 0.08,
-                        duration: 0.8,
-                        ease: 'easeOut'
-                      }}
-                    />
-                  )
-                })}
-              </svg>
-            </motion.div>
-          )}
-        </motion.div>
-
-        <motion.div
-          className="absolute bottom-12 text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-        >
-          <p className="text-xs text-muted-foreground uppercase tracking-widest font-body">
-            Scroll to explore
-          </p>
-        </motion.div>
-      </section>
-
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-8 py-32">
-        <GlyphShowcase />
-      </section>
-
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-8 py-32">
-        <div className="max-w-4xl w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <p className="font-body text-xs text-muted-foreground uppercase tracking-[0.1em] mb-4">
-              01 — HOST
-            </p>
-            <h2 className="font-display text-5xl font-semibold tracking-[0.02em] mb-6 text-foreground uppercase">
-              Zoom Control Layer
-            </h2>
-            <p className="font-body text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
-              Precision control for Zoom hosts. Manage waiting rooms, admit participants, monitor session state—all from a unified command interface.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex justify-center"
           >
-            <div className="glass-panel rounded-lg p-12 max-w-md">
-              <div className="relative w-32 h-32 mx-auto">
-                <div className="absolute inset-0 bg-primary/10 rounded-full blur-2xl animate-[pulse-glow_4s_ease-in-out_infinite]" />
-                <div className="relative w-full h-full bg-primary/5 rounded-full border border-primary/20 flex items-center justify-center">
-                  <div className="w-2 h-2 bg-primary rounded-full shadow-[0_0_20px_rgba(0,255,65,0.6)]" />
+            <Card className="glass-panel p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="font-display text-xl font-semibold tracking-tight text-foreground uppercase">
+                  Session Control
+                </h2>
+                <Badge 
+                  variant="outline"
+                  className={`${
+                    isLocked 
+                      ? 'bg-accent/15 text-accent border-accent/30' 
+                      : 'bg-primary/15 text-primary border-primary/30'
+                  } font-mono text-xs uppercase tracking-wider`}
+                >
+                  {isLocked ? 'LOCKED' : 'ACTIVE'}
+                </Badge>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="glass-panel rounded-md p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Clock size={16} className="text-accent" weight="bold" />
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider font-mono">Waiting</p>
+                  </div>
+                  <p className="text-3xl font-display font-bold text-accent">8</p>
+                </div>
+                
+                <div className="glass-panel rounded-md p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Users size={16} className="text-primary" weight="bold" />
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider font-mono">Active</p>
+                  </div>
+                  <p className="text-3xl font-display font-bold text-primary">42</p>
                 </div>
               </div>
-              <p className="text-center mt-8 text-sm text-muted-foreground font-mono uppercase tracking-wider">
-                System Ready
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-8 py-32">
-        <div className="max-w-4xl w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <p className="font-body text-xs text-muted-foreground uppercase tracking-[0.1em] mb-4">
-              02 — EXTEND
-            </p>
-            <h2 className="font-display text-5xl font-semibold tracking-[0.02em] mb-6 text-foreground uppercase">
-              Remote Execution
-            </h2>
-            <p className="font-body text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
-              Execute Zoom host commands from anywhere. Telegram and Discord become remote terminals for session control and real-time alerts.
-            </p>
-          </motion.div>
+              <Separator className="bg-white/[0.08] mb-6" />
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col items-center gap-8"
-          >
-            <div className="w-full max-w-2xl">
-              <p className="text-xs text-muted-foreground uppercase tracking-wider mb-3 font-mono">
-                Integration Layer
-              </p>
-              <div className="grid grid-cols-2 gap-3">
-                <motion.div
-                  className="glass-panel rounded-md p-6 text-center hover:bg-white/[0.04] transition-colors cursor-pointer col-span-2"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
+              <div className="space-y-3">
+                <Button 
+                  onClick={handleAdmitAll}
+                  className="w-full bg-primary/10 hover:bg-primary/20 border border-primary/30 text-primary font-mono text-sm uppercase tracking-wider h-12"
                 >
-                  <p className="text-base text-primary font-display font-semibold mb-1">Zoom</p>
-                  <p className="text-xs text-muted-foreground font-mono">Primary Control Surface</p>
-                </motion.div>
-                {['Telegram', 'Discord'].map((platform, idx) => (
-                  <motion.div
-                    key={platform}
-                    className="glass-panel rounded-md p-4 text-center hover:bg-white/[0.04] transition-colors cursor-pointer"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + idx * 0.1 }}
-                  >
-                    <p className="text-sm text-foreground/80 font-body">{platform}</p>
-                    <p className="text-xs text-muted-foreground font-mono mt-1">Extension</p>
-                  </motion.div>
-                ))}
+                  <UserPlus size={20} weight="bold" className="mr-2" />
+                  Admit All
+                </Button>
+
+                <Button 
+                  onClick={handleLockToggle}
+                  variant="outline"
+                  className={`w-full ${
+                    isLocked
+                      ? 'bg-accent/10 hover:bg-accent/20 border-accent/30 text-accent'
+                      : 'bg-white/[0.02] hover:bg-white/[0.04] border-white/[0.08] text-foreground/80'
+                  } font-mono text-sm uppercase tracking-wider h-12`}
+                >
+                  <LockKey size={20} weight="bold" className="mr-2" />
+                  {isLocked ? 'Unlock Session' : 'Lock Session'}
+                </Button>
+
+                <Button 
+                  onClick={handleRecordToggle}
+                  variant="outline"
+                  className={`w-full ${
+                    isRecording
+                      ? 'bg-destructive/10 hover:bg-destructive/20 border-destructive/30 text-destructive'
+                      : 'bg-white/[0.02] hover:bg-white/[0.04] border-white/[0.08] text-foreground/80'
+                  } font-mono text-sm uppercase tracking-wider h-12`}
+                >
+                  <Record size={20} weight={isRecording ? 'fill' : 'bold'} className="mr-2" />
+                  {isRecording ? 'Stop Recording' : 'Start Recording'}
+                </Button>
               </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-8 py-32">
-        <div className="max-w-4xl w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <p className="font-body text-xs text-muted-foreground uppercase tracking-[0.1em] mb-4">
-              03 — COMMAND
-            </p>
-            <h2 className="font-display text-5xl font-semibold tracking-[0.02em] mb-6 text-foreground uppercase">
-              Terminal Interface
-            </h2>
-            <p className="font-body text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
-              Command-line driven Zoom host actions. Type /zoom admit all, /zoom lock, /zoom record—execute instantly from any integrated platform.
-            </p>
+            </Card>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col items-center gap-8"
-          >
-            <CommandInput />
-            
-            <div className="glass-panel rounded-lg p-6 w-full max-w-2xl">
-              <p className="text-xs text-muted-foreground uppercase tracking-wider mb-4 font-mono">
-                Zoom Host Commands
-              </p>
-              <div className="space-y-2 font-mono text-sm">
-                {[
-                  { cmd: '/zoom admit all', desc: 'Admit all from waiting room' },
-                  { cmd: '/zoom lock', desc: 'Lock session to current participants' },
-                  { cmd: '/zoom mute @user', desc: 'Mute specific participant' },
-                  { cmd: '/zoom record start', desc: 'Begin session recording' },
-                ].map((item, idx) => (
-                  <motion.div
-                    key={idx}
-                    className="flex justify-between items-center py-2 border-b border-white/[0.04] last:border-0"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + idx * 0.05 }}
-                  >
-                    <span className="text-primary">{item.cmd}</span>
-                    <span className="text-muted-foreground text-xs">{item.desc}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-8 py-32">
-        <div className="max-w-4xl w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <p className="font-body text-xs text-muted-foreground uppercase tracking-[0.1em] mb-4">
-              04 — MONITOR
-            </p>
-            <h2 className="font-display text-5xl font-semibold tracking-[0.02em] mb-6 text-foreground uppercase">
-              Session Telemetry
-            </h2>
-            <p className="font-body text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
-              Real-time Zoom session monitoring. Waiting room count, active speakers, hand raises, recording status—all at a glance.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex justify-center"
-          >
-            <SessionStatus />
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-8 py-32">
-        <div className="max-w-6xl w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <p className="font-body text-xs text-muted-foreground uppercase tracking-[0.1em] mb-4">
-              05 — ANALYZE
-            </p>
-            <h2 className="font-display text-5xl font-semibold tracking-[0.02em] mb-6 text-foreground uppercase">
-              Real-Time Analytics
-            </h2>
-            <p className="font-body text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
-              Comprehensive Zoom session metrics and insights. Monitor participant behavior, engagement patterns, and operational efficiency—live telemetry for data-driven host decisions.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-8 flex justify-center"
-          >
-            <Button
-              onClick={() => setShowComparison(true)}
-              className="glass-panel hover:glass-panel-hover border border-white/[0.08] px-6 py-3"
-            >
-              <ChartBar size={18} className="mr-2" weight="bold" />
-              <span className="font-mono text-sm uppercase tracking-wider">Compare Sessions</span>
-            </Button>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <AnalyticsDashboard sessionId="ZM-4A7B" />
+            <Card className="glass-panel p-6">
+              <div className="flex items-center gap-2 mb-6">
+                <CheckCircle size={20} className="text-primary" weight="bold" />
+                <h2 className="font-display text-xl font-semibold tracking-tight text-foreground uppercase">
+                  Activity Feed
+                </h2>
+              </div>
+
+              <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+                {activityLog.map((entry, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="glass-panel-hover rounded-md p-4 space-y-2"
+                  >
+                    <div className="flex items-center justify-between">
+                      <code className="text-sm text-primary font-mono">
+                        {entry.command}
+                      </code>
+                      <span className="text-xs text-muted-foreground font-mono">
+                        {entry.timestamp}
+                      </span>
+                    </div>
+                    <p className="text-sm text-foreground/80 font-body">
+                      {entry.result}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            </Card>
           </motion.div>
         </div>
-      </section>
 
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-8 py-32">
-        <div className="max-w-4xl w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <p className="font-body text-xs text-muted-foreground uppercase tracking-[0.1em] mb-4">
-              06 — ARCHIVE
-            </p>
-            <h2 className="font-display text-5xl font-semibold tracking-[0.02em] mb-6 text-foreground uppercase">
-              Session History
-            </h2>
-            <p className="font-body text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
-              Complete Zoom session logs. Host commands executed, participant flow, recordings captured—every action preserved and searchable.
-            </p>
-          </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <Card className="glass-panel p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Terminal size={20} className="text-primary" weight="bold" />
+              <h2 className="font-display text-xl font-semibold tracking-tight text-foreground uppercase">
+                Command Interface
+              </h2>
+            </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex justify-center"
-          >
-            <MemoryLog />
-          </motion.div>
-        </div>
-      </section>
+            <form onSubmit={handleCommand} className="space-y-4">
+              <div className="relative">
+                <Input
+                  value={commandInput}
+                  onChange={(e) => setCommandInput(e.target.value)}
+                  placeholder="/zoom admit all"
+                  className="w-full bg-white/[0.02] border-white/[0.08] text-foreground font-mono h-14 text-base pl-4 focus:border-primary/50 focus:ring-primary/20"
+                />
+              </div>
 
-      <footer className="relative py-16 px-8 border-t border-white/[0.08]">
-        <div className="max-w-4xl mx-auto text-center">
+              <div className="glass-panel rounded-md p-4">
+                <p className="text-xs text-muted-foreground uppercase tracking-wider mb-3 font-mono">
+                  Available Commands
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 font-mono text-xs">
+                  {[
+                    { cmd: '/zoom admit all', desc: 'Admit all from waiting room' },
+                    { cmd: '/zoom lock', desc: 'Lock session to current participants' },
+                    { cmd: '/zoom mute @user', desc: 'Mute specific participant' },
+                    { cmd: '/zoom record start', desc: 'Begin session recording' },
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="flex justify-between items-center py-2 border-b border-white/[0.04] last:border-0"
+                    >
+                      <span className="text-primary">{item.cmd}</span>
+                      <span className="text-muted-foreground text-[10px]">{item.desc}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </form>
+          </Card>
+        </motion.div>
+
+        <footer className="mt-16 text-center">
           <p className="text-xs text-muted-foreground uppercase tracking-widest font-mono mb-2">
             NΞBU
           </p>
           <p className="text-xs text-muted-foreground/60 font-body">
             Operator Control System — v1.0.0
           </p>
-        </div>
-      </footer>
-
-      <AnimatePresence>
-        {selectedSession !== null && (
-          <SessionManagementPanel
-            telemetry={orbitalNodes[selectedSession].telemetry}
-            onClose={() => setSelectedSession(null)}
-          />
-        )}
-        {showComparison && (
-          <SessionComparisonView onClose={() => setShowComparison(false)} />
-        )}
-      </AnimatePresence>
+        </footer>
+      </motion.div>
     </div>
   )
 }
