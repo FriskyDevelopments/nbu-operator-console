@@ -8,6 +8,7 @@ import { AnimatedNebuGlyph } from './components/NebuGlyph'
 import NebuGlyph from './components/NebuGlyph'
 import { OrbitalNode } from './components/OrbitalNode'
 import SessionManagementPanel from './components/SessionManagementPanel'
+import AnalyticsDashboard from './components/AnalyticsDashboard'
 
 function App() {
   const [glyphExpanded, setGlyphExpanded] = useState(false)
@@ -429,6 +430,37 @@ function App() {
       </section>
 
       <section className="relative min-h-screen flex flex-col items-center justify-center px-8 py-32">
+        <div className="max-w-6xl w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <p className="font-body text-xs text-muted-foreground uppercase tracking-[0.1em] mb-4">
+              05 — ANALYZE
+            </p>
+            <h2 className="font-display text-5xl font-semibold tracking-[0.02em] mb-6 text-foreground uppercase">
+              Real-Time Analytics
+            </h2>
+            <p className="font-body text-base text-foreground/60 max-w-xl mx-auto leading-relaxed">
+              Comprehensive Zoom session metrics and insights. Monitor participant behavior, engagement patterns, and operational efficiency—live telemetry for data-driven host decisions.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <AnalyticsDashboard sessionId="ZM-4A7B" />
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="relative min-h-screen flex flex-col items-center justify-center px-8 py-32">
         <div className="max-w-4xl w-full">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -438,7 +470,7 @@ function App() {
             className="text-center mb-16"
           >
             <p className="font-body text-xs text-muted-foreground uppercase tracking-[0.1em] mb-4">
-              05 — ARCHIVE
+              06 — ARCHIVE
             </p>
             <h2 className="font-display text-5xl font-semibold tracking-[0.02em] mb-6 text-foreground uppercase">
               Session History
