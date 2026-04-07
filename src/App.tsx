@@ -83,14 +83,12 @@ function App() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-6xl mx-auto z-10"
         >
-          <div className="text-center mb-16">
+        >
             <h1 className="font-display text-8xl font-bold tracking-[0.05em] text-foreground uppercase mb-6">
               NΞBU
-            </h1>
+              NΞBU
             
-            <p className="font-display text-xl tracking-[0.15em] text-foreground/60 uppercase mb-4">
               Command the Session
             </p>
             
@@ -110,14 +108,14 @@ function App() {
                   Quick Actions
                 </h2>
                 <div className="space-y-3">
-                  <Button 
+                </h2>
                     onClick={handleAdmitAll}
-                    className="w-full bg-primary/10 hover:bg-primary/20 border border-primary/30 text-primary font-mono text-sm uppercase tracking-wider h-12"
+                  <Button er-primary/30 text-primary font-mono text-sm uppercase tracking-wider h-12"
                   >
                     <UserPlus size={20} weight="bold" className="mr-2" />
-                    Admit All
+                  >
                   </Button>
-                  <Button 
+                    Admit All
                     onClick={handleLockToggle}
                     variant={isLocked ? "destructive" : "secondary"}
                     className="w-full font-mono text-sm uppercase tracking-wider h-12"
@@ -125,7 +123,7 @@ function App() {
                     <LockKey size={20} weight="bold" className="mr-2" />
                     {isLocked ? 'Unlock' : 'Lock'} Session
                   </Button>
-                  <Button 
+                    {isLocked ? 'Unlock' : 'Lock'} Session
                     onClick={handleRecordToggle}
                     variant={isRecording ? "destructive" : "secondary"}
                     className="w-full font-mono text-sm uppercase tracking-wider h-12"
@@ -137,13 +135,13 @@ function App() {
               </Card>
             </motion.div>
 
-            <motion.div
+            </motion.div>
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+            <motion.div
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               <Card className="glass-panel p-6">
-                <h2 className="text-sm font-mono uppercase tracking-wider text-foreground mb-4">
+            >king-wider text-foreground mb-4">
                   Activity Log
                 </h2>
                 <div className="space-y-3 max-h-[240px] overflow-y-auto">
@@ -154,7 +152,7 @@ function App() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3 }}
                       className="glass-panel-hover rounded-md p-4 space-y-2"
-                    >
+                      transition={{ duration: 0.3 }}
                       <div className="flex items-center justify-between">
                         <code className="text-sm text-primary font-mono">
                           {entry.command}
@@ -170,23 +168,23 @@ function App() {
                   ))}
                 </div>
               </Card>
-            </motion.div>
+                </div>
           </div>
-
+            </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+          <motion.div
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <Card className="glass-panel p-6">
-              <div className="flex items-center gap-2 mb-4">
+          >
                 <Terminal size={20} weight="bold" className="text-primary" />
                 <h2 className="text-sm font-mono uppercase tracking-wider text-foreground">
-                  Command Input
+                <Terminal size={20} weight="bold" className="text-primary" />
                 </h2>
               </div>
-              <form onSubmit={handleCommand} className="flex gap-3">
-                <Input
+                </h2>
+              </div>
                   value={commandInput}
                   onChange={(e) => setCommandInput(e.target.value)}
                   placeholder="/zoom command"
@@ -194,17 +192,17 @@ function App() {
                 />
                 <Button 
                   type="submit"
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-mono uppercase tracking-wider px-8 h-14"
+                <Button 14"
                 >
                   Execute
-                </Button>
+                >
               </form>
             </Card>
-          </motion.div>
+              </form>
         </motion.div>
+          </motion.div>
+    </div>
       </section>
     </div>
-  )
-}
 
 export default App
