@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { motion, useScroll } from 'framer-motion'
+import { motion, useScroll, AnimatePresence } from 'framer-motion'
 import CommandInput from './components/CommandInput'
 import SessionStatus from './components/SessionStatus'
 import MemoryLog from './components/MemoryLog'
@@ -7,9 +7,11 @@ import GlyphShowcase from './components/GlyphShowcase'
 import { AnimatedNebuGlyph } from './components/NebuGlyph'
 import NebuGlyph from './components/NebuGlyph'
 import { OrbitalNode } from './components/OrbitalNode'
+import SessionManagementPanel from './components/SessionManagementPanel'
 
 function App() {
   const [glyphExpanded, setGlyphExpanded] = useState(false)
+  const [selectedSession, setSelectedSession] = useState<number | null>(null)
   const { scrollYProgress } = useScroll()
   
   const orbitalNodes = [
@@ -182,6 +184,7 @@ function App() {
                   index={index}
                   distance={180}
                   telemetry={node.telemetry}
+                  onClick={() => setSelectedSession(index)}
                 />
               ))}
 
@@ -467,6 +470,15 @@ function App() {
           </p>
         </div>
       </footer>
+
+      <AnimatePresence>
+        {selectedSession !== null && (
+          <SessionManagementPanel
+            telemetry={orbitalNodes[selectedSession].telemetry}
+            onClose={() => setSelectedSession(null)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   )
 }

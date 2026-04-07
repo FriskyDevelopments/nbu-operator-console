@@ -16,9 +16,10 @@ interface OrbitalNodeProps {
   index: number
   distance: number
   telemetry: NodeTelemetry
+  onClick?: () => void
 }
 
-export function OrbitalNode({ angle, index, distance, telemetry }: OrbitalNodeProps) {
+export function OrbitalNode({ angle, index, distance, telemetry, onClick }: OrbitalNodeProps) {
   const [isHovered, setIsHovered] = useState(false)
   const radians = (angle * Math.PI) / 180
   const x = Math.cos(radians) * distance
@@ -73,6 +74,7 @@ export function OrbitalNode({ angle, index, distance, telemetry }: OrbitalNodePr
             scale: isHovered ? 1.5 : 1,
           }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
+          onClick={onClick}
         >
           <div 
             className="absolute inset-0 rounded-full blur-md transition-colors duration-300" 
