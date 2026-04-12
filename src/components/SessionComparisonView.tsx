@@ -11,6 +11,7 @@ import {
 } from './ui/select'
 import { Tabs, TabsList, TabsTrigger } from './ui/tabs'
 import AnalyticsDashboard from './AnalyticsDashboard'
+import SessionBookmarks from './SessionBookmarks'
 
 interface Session {
   id: string
@@ -48,6 +49,10 @@ export default function SessionComparisonView({ onClose }: SessionComparisonView
     const newSessions = [...selectedSessions]
     newSessions[index] = sessionId
     setSelectedSessions(newSessions)
+  }
+
+  const handleLoadBookmark = (sessionIds: string[]) => {
+    setSelectedSessions(sessionIds)
   }
 
   const addSession = () => {
@@ -158,11 +163,23 @@ export default function SessionComparisonView({ onClose }: SessionComparisonView
             </div>
           </motion.div>
 
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.15 }}
+            className="glass-panel rounded-lg p-6 mb-8"
+          >
+            <SessionBookmarks
+              currentSessions={selectedSessions}
+              onLoadBookmark={handleLoadBookmark}
+            />
+          </motion.div>
+
           {selectedSessionData.length >= 2 && (
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.15 }}
+              transition={{ delay: 0.2 }}
               className="glass-panel rounded-lg p-6 mb-8"
             >
               <h3 className="font-display text-lg font-semibold text-foreground uppercase tracking-wide mb-6">
@@ -223,7 +240,7 @@ export default function SessionComparisonView({ onClose }: SessionComparisonView
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.25 }}
             className="glass-panel rounded-lg p-6 mb-8"
           >
             <div className="flex items-center gap-4 flex-wrap">
@@ -303,7 +320,7 @@ export default function SessionComparisonView({ onClose }: SessionComparisonView
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.35 }}
             className={
               layoutMode === 'grid'
                 ? 'grid gap-6 ' + (selectedSessions.length === 2 ? 'grid-cols-1 xl:grid-cols-2' :
@@ -317,7 +334,7 @@ export default function SessionComparisonView({ onClose }: SessionComparisonView
                 key={`${sessionId}-${index}-content`}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.4 + index * 0.1 }}
+                transition={{ delay: 0.45 + index * 0.1 }}
                 className="glass-panel rounded-lg p-6 border border-white/[0.08]"
               >
                 <AnalyticsDashboard sessionId={sessionId} />
