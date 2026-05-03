@@ -1,23 +1,30 @@
-# ✨ Welcome to Your Spark Template!
-You've just launched your brand-new Spark Template Codespace — everything’s fired up and ready for you to explore, build, and create with Spark!
+# nbu-operator-console
 
-This template is your blank canvas. It comes with a minimal setup to help you get started quickly with Spark development.
+> **Status: Scaffold — needs implementation decision**
+>
+> This repository contains a default Vite/React/Tailwind scaffold. Before doing production work, decide:
+> - (a) Is there real product intent? (check `PRD.md` if present)
+> - (b) Is this still active?
+> - (c) Is this superseded by another repo?
 
-🚀 What's Inside?
-- A clean, minimal Spark environment
-- Pre-configured for local development
-- Ready to scale with your ideas
-  
-🧠 What Can You Do?
+## Purpose
 
-Right now, this is just a starting point — the perfect place to begin building and testing your Spark applications.
+Nebulosa operator console. **Check overlap with `frisky-command-deck`** — pick ONE canonical operator dashboard.
 
-🧹 Just Exploring?
-No problem! If you were just checking things out and don’t need to keep this code:
+## If active: next steps
 
-- Simply delete your Spark.
-- Everything will be cleaned up — no traces left behind.
+- [ ] Replace this README with real product documentation
+- [ ] Define actual feature scope
+- [ ] Add `.env.example` with all required keys
+- [ ] Add Dockerfile
+- [ ] Add CI (lint + typecheck + build)
+- [ ] Accessibility checks and Lighthouse budget
 
-📄 License For Spark Template Resources 
+## If inactive
 
-The Spark Template files and resources from GitHub are licensed under the terms of the MIT license, Copyright GitHub, Inc.
+Archive this repo and leave a pointer to the canonical replacement.
+
+## Related repos
+
+- [NEBU-](https://github.com/FriskyDevelopments/NEBU-)
+- [frisky-command-deck](https://github.com/FriskyDevelopments/frisky-command-deck) ← possible overlap
