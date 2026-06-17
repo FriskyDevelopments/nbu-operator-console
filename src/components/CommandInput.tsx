@@ -34,6 +34,7 @@ export default function CommandInput() {
             value={command}
             onChange={(e) => setCommand(e.target.value)}
             placeholder="/zoom admit all"
+            aria-label="Command input"
             className="border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 font-mono text-sm h-9 text-foreground placeholder:text-muted-foreground"
           />
         </div>
