@@ -1,15 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from './components/ui/button'
-import { 
-  UserPlus, 
-  LockKey, 
-  Record, 
+import {
+  UserPlus,
+  LockKey,
+  Record,
   Terminal,
   Users,
   Clock,
   ChartLine,
-  ArrowsLeftRight
+  ArrowsLeftRight,
+  Globe
 } from '@phosphor-icons/react'
 import { Card } from './components/ui/card'
 import { Input } from './components/ui/input'
@@ -17,11 +18,19 @@ import { Separator } from './components/ui/separator'
 import { Badge } from './components/ui/badge'
 import AnalyticsDashboard from './components/AnalyticsDashboard'
 import SessionComparisonView from './components/SessionComparisonView'
+import InfraDashboard from './components/InfraDashboard'
+import { AuthGate, UserMenu } from './components/AuthGate'
 
-type View = 'control' | 'analytics' | 'comparison'
+type View = 'control' | 'analytics' | 'comparison' | 'infra'
 
 function App() {
   const [currentView, setCurrentView] = useState<View>('control')
+
+  useEffect(() => {
+    if (window.location.pathname === '/admin/infra') {
+      setCurrentView('infra')
+    }
+  }, [])
   const [isLocked, setIsLocked] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
   const [commandInput, setCommandInput] = useState('')
@@ -125,6 +134,16 @@ function App() {
                 <ArrowsLeftRight size={16} className="mr-2" />
                 <span className="font-mono text-xs uppercase">Compare</span>
               </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setCurrentView('infra')}
+                className="glass-panel hover:glass-panel-hover"
+              >
+                <Globe size={16} className="mr-2" />
+                <span className="font-mono text-xs uppercase">Infra</span>
+              </Button>
+              <UserMenu />
             </div>
           </div>
         </div>
@@ -138,13 +157,84 @@ function App() {
     )
   }
 
+  if (currentView === 'infra') {
+    return (
+      <div className="min-h-screen bg-background font-body">
+        <div className="fixed top-0 left-0 right-0 z-40 glass-panel border-b border-white/[0.08]">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
+            <h1 className="font-display text-2xl font-bold tracking-tight text-foreground uppercase">
+              NΞBU
+            </h1>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setCurrentView('control')}
+                className="glass-panel hover:glass-panel-hover"
+              >
+                <Terminal size={16} className="mr-2" />
+                <span className="font-mono text-xs uppercase">Control</span>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setCurrentView('analytics')}
+                className="glass-panel hover:glass-panel-hover"
+              >
+                <ChartLine size={16} className="mr-2" />
+                <span className="font-mono text-xs uppercase">Analytics</span>
+              </Button>
+              <UserMenu />
+            </div>
+          </div>
+        </div>
+        
+        <div className="pt-24 px-4 md:px-8 py-12">
+          <div className="max-w-7xl mx-auto">
+            <InfraDashboard />
+          </div>
+        </div>
+      </div>
+    )
+  }
+  
   return (
     <div className="min-h-screen bg-background font-body">
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-8 py-12">
+      {/* Header with user menu */}
+      <div className="fixed top-0 left-0 right-0 z-40 glass-panel border-b border-white/[0.08]">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
+          <h1 className="font-display text-2xl font-bold tracking-tight text-foreground uppercase">
+            NEBU
+          </h1>
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setCurrentView('analytics')}
+              className="glass-panel hover:glass-panel-hover"
+            >
+              <ChartLine size={16} className="mr-2" />
+              <span className="font-mono text-xs uppercase">Analytics</span>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setCurrentView('infra')}
+              className="glass-panel hover:glass-panel-hover"
+            >
+              <Globe size={16} className="mr-2" />
+              <span className="font-mono text-xs uppercase">Infra</span>
+            </Button>
+            <UserMenu />
+          </div>
+        </div>
+      </div>
+
+      <section className="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-8 py-12 pt-24">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-primary/20 to-transparent" />
         </div>
- 
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -152,13 +242,13 @@ function App() {
           className="text-center mb-12 z-10"
         >
           <h1 className="font-display text-6xl md:text-8xl font-bold tracking-[0.05em] text-foreground uppercase mb-6">
-            NΞBU
+            NEBU
           </h1>
-          
+
           <p className="font-display text-xl md:text-2xl font-semibold tracking-wide text-foreground/80 mb-4 uppercase">
             Command the Session
           </p>
-          
+
           <p className="font-body text-sm md:text-base text-foreground/40 max-w-2xl mx-auto">
             Operator control system for Zoom hosts, with Telegram and Telegram-based remote actions for now.
           </p>
@@ -329,4 +419,12 @@ function App() {
   )
 }
 
-export default App
+function AppWithAuth() {
+  return (
+    <AuthGate>
+      <App />
+    </AuthGate>
+  );
+}
+
+export default AppWithAuth

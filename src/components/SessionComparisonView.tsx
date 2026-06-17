@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { X, CaretDown, Check, ArrowsLeftRight, Rows, Columns, TrendUp, TrendDown, Minus } from '@phosphor-icons/react'
+import { motion } from 'framer-motion'
+import { X, Rows, Columns, TrendUp, Minus } from '@phosphor-icons/react'
 import { Button } from './ui/button'
 import { 
   Select,

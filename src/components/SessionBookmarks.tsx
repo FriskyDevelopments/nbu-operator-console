@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Bookmark, BookmarkSimple, Plus, X, Pencil, Check } from '@phosphor-icons/react'
+import { Bookmark, BookmarkSimple, X, Pencil, Check } from '@phosphor-icons/react'
 import { Button } from './ui/button'
 import { Card } from './ui/card'
 import { Input } from './ui/input'
@@ -29,7 +29,7 @@ interface SessionBookmarksProps {
 }
 
 export default function SessionBookmarks({ currentSessions, onLoadBookmark }: SessionBookmarksProps) {
-  const [bookmarks, setBookmarks, deleteBookmarks] = useKV<SessionBookmark[]>('session-bookmarks', [])
+  const [bookmarks, setBookmarks] = useKV<SessionBookmark[]>('session-bookmarks', [])
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [newBookmarkName, setNewBookmarkName] = useState('')
   const [editingId, setEditingId] = useState<string | null>(null)
