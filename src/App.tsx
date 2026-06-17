@@ -377,6 +377,7 @@ function App() {
             
             <form onSubmit={handleCommand} className="flex flex-col sm:flex-row gap-3">
               <Input
+                aria-label="Command input"
                 value={commandInput}
                 onChange={(e) => setCommandInput(e.target.value)}
                 placeholder="/zoom admit all"
