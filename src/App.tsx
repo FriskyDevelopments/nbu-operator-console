@@ -52,7 +52,7 @@ function App() {
         timestamp: new Date().toLocaleTimeString('en-US', { hour12: false }) 
       },
       ...activityLog,
-    ])
+    ].slice(0, 50))
     setCommandInput('')
   }
 
@@ -67,7 +67,7 @@ function App() {
         timestamp: new Date().toLocaleTimeString('en-US', { hour12: false }) 
       },
       ...activityLog,
-    ])
+    ].slice(0, 50))
   }
 
   const handleLockToggle = () => {
@@ -80,7 +80,7 @@ function App() {
         timestamp: new Date().toLocaleTimeString('en-US', { hour12: false }) 
       },
       ...activityLog,
-    ])
+    ].slice(0, 50))
   }
 
   const handleRecordToggle = () => {
@@ -93,7 +93,7 @@ function App() {
         timestamp: new Date().toLocaleTimeString('en-US', { hour12: false }) 
       },
       ...activityLog,
-    ])
+    ].slice(0, 50))
   }
 
   const sessionState = isLocked ? 'LOCKED' : 'ACTIVE'
