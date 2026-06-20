@@ -45,10 +45,11 @@ export default function MemoryLog() {
   const filterByType = (type: LogEntry['type']) => entries.filter(e => e.type === type)
 
   const LogList = ({ items }: { items: LogEntry[] }) => (
-    <div className="space-y-2">
+    <div className="space-y-2" role="list">
       {items.map((entry, index) => (
         <div
           key={entry.id}
+          role="listitem"
           className="glass-panel rounded-md p-4 hover:bg-white/[0.04] transition-colors cursor-pointer group"
           style={{ animationDelay: `${index * 50}ms` }}
         >
