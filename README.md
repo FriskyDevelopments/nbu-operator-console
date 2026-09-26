@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white) ![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB) ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)
 
-NΞBU is described in [`PRD.md`](PRD.md) as a precision operator console that gives **Zoom hosts** command-line style control over live sessions, with Telegram and Discord planned as remote extensions. This repo is the front end, a GitHub Spark (Vite + React) app. Users sign in through **WorkOS AuthKit** (`AuthGate`). They then get a control view (session status, command input, node telemetry, live activity graph, memory log), an analytics dashboard, a session-comparison view with bookmarks saved in Spark KV, and an infrastructure overview. Telemetry, activity and analytics figures are **static or simulated client-side** for now, and the app doesn't talk to Zoom yet. It is for Nebulosa/NEBU operators.
+NΞBU is described in [`PRD.md`](PRD.md) as a precision operator console that gives **Zoom hosts** command-line style control over live sessions, with Telegram and Discord planned as remote extensions. This repo is the front end, a GitHub Spark (Vite + React) app. Users sign in through **WorkOS AuthKit** (`AuthGate`). They then get an inline control view (lock meeting, record, admit the waiting room, command input, activity log), an analytics dashboard, a session-comparison view with bookmarks saved in Spark KV, and an infrastructure overview. Participant counts, activity and analytics figures are **static or simulated client-side** for now, and the app doesn't talk to Zoom yet. It is for Nebulosa/NEBU operators.
 
 ## Architecture
 
@@ -13,7 +13,7 @@ flowchart LR
   op([Operator]) --> auth[AuthGate<br/>WorkOS AuthKit · VITE_WORKOS_CLIENT_ID]
   auth -->|signIn / signUp| workos[WorkOS AuthKit]
   auth --> app[App.tsx views]
-  app --> control[Control<br/>SessionStatus · CommandInput · NodeTelemetry<br/>LiveActivityGraph · MemoryLog]
+  app --> control[Control view in App.tsx<br/>lock · record · admit all<br/>command input · activity log]
   app --> analytics[AnalyticsDashboard]
   app --> compare[SessionComparisonView]
   app --> infra[InfraDashboard]
@@ -34,7 +34,8 @@ PRD.md  STACK.md  ICONS.md
 src/
   main.tsx            AuthKitProvider (requires VITE_WORKOS_CLIENT_ID)
   App.tsx             control / analytics / comparison / infra views
-  components/         AuthGate, CommandInput, SessionStatus, NodeTelemetry, NetworkGraph, NebuGlyph, …
+  components/         AuthGate, AnalyticsDashboard, SessionComparisonView, InfraDashboard
+                      + not-yet-wired widgets (NodeTelemetry, LiveActivityGraph, NetworkGraph, NebuGlyph, …)
 ```
 
 ## Local development
